@@ -1,0 +1,78 @@
+package com.example.texto
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.texto.ui.theme.TextoTheme
+import kotlin.random.Random
+
+class Ejercicio6Activity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            TextoTheme {
+                PantallaEmoji()
+            }
+        }
+    }
+}
+
+@Composable
+fun PantallaEmoji() {
+    var taps by remember { mutableStateOf(0) }
+    var posicion by remember { mutableStateOf(PosicionCentro) }
+
+    // Cambiar posición aleatoriamente
+    val posiciones = listOf(PosicionArriba, PosicionAbajo, PosicionIzquierda, PosicionDerecha, PosicionCentro)
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable {
+                taps++
+                posicion = posiciones.random()
+            }
+    ) {
+        // Mostrar el mensaje de victoria si taps > 10
+        if (taps > 10) {
+            Text(
+                text = "¡Ganaste!",
+                fontSize = 32.sp,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        } else {
+            // Mostrar el emoji en la posición seleccionada
+            Text(
+                text = "\uD83E\uDDDA\uD83C\uDFFB",
+                fontSize = 50.sp,
+                modifier = Modifier.align(posicion)
+            )
+
+            // Contador de taps
+            Text(
+                text = "Taps: $taps",
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 16.dp)
+            )
+        }
+    }
+}
+
+// Posiciones predefinidas para el emoji
+val PosicionArriba = Alignment.TopCenter
+val PosicionAbajo = Alignment.BottomCenter
+val PosicionIzquierda = Alignment.CenterStart
+val PosicionDerecha = Alignment.CenterEnd
+val PosicionCentro = Alignment.Center
