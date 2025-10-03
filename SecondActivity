@@ -1,0 +1,43 @@
+package com.example.texto
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.texto.ui.theme.TextoTheme
+
+class SecondActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            TextoTheme {
+                PantallaSegunda { finish() }
+            }
+        }
+    }
+}
+
+@Composable
+fun PantallaSegunda(onVolverClick: () -> Unit) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            Text(text = "Lo que os de la gana")
+            Button(onClick = onVolverClick) {
+                Text(text = "Volver")
+            }
+        }
+    }
+}
