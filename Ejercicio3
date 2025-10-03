@@ -1,0 +1,79 @@
+package com.example.texto
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.texto.ui.theme.TextoTheme
+
+class Ejercicio3Activity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            TextoTheme {
+                PantallaCaja()
+            }
+        }
+    }
+}
+
+@Composable
+fun PantallaCaja() {
+    // Guardamos el contador usando rememberSaveable para que no se pierda al girar
+    var contador by rememberSaveable { mutableStateOf(0) }
+
+    // Decidimos qué emoji mostrar
+    val emoji = if (contador >= 5) "🎁" else "📦"
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable { contador++ } // cada toque aumenta el contador
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            Text(
+                text = emoji,
+                fontSize = 80.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            if (contador >= 5) {
+                Text(
+                    text = "¡Sorpresa!",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            } else {
+                Text(
+                    text = "Taps: $contador",
+                    fontSize = 20.sp
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewPantallaCaja() {
+    TextoTheme {
+        PantallaCaja()
+    }
+}
