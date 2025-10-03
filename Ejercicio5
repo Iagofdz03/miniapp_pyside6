@@ -1,0 +1,63 @@
+package com.example.texto
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.texto.ui.theme.TextoTheme
+
+class Ejercicio5Activity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            TextoTheme {
+                PantallaContador()
+            }
+        }
+    }
+}
+
+@Composable
+fun PantallaContador() {
+    // Estado del contador
+    var contador by remember { mutableStateOf(0) }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            Text(
+                text = contador.toString(),
+                fontSize = 60.sp
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                Button(onClick = { contador-- }) {
+                    Text(text = "-")
+                }
+                Button(onClick = { contador++ }) {
+                    Text(text = "+")
+                }
+            }
+
+            // Botón reset
+            Button(onClick = { contador = 0 }) {
+                Text(text = "Reset")
+            }
+        }
+    }
+}
